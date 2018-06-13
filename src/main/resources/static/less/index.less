@@ -1,0 +1,468 @@
+
+//less变量
+@solid:1px solid;
+.btn{
+  background: #ff8000;
+  color: #fff;
+  display: inline-block;
+}
+//头部样式
+#header{
+  background: rgba(174, 174, 174, 1);
+  height: 78px;
+  .header_inner{
+    width: 95%;
+    margin: 0 auto;
+    padding-top: 20px;
+    max-width: 1300px;
+  }
+  h3{
+    font-size: 22px;
+  }
+  .login_sec{
+    font-size: 14px;
+  }
+}
+#container{
+  margin: 0 auto;
+}
+
+//左侧导航样式
+.nav_aside{
+  background: #e7e7e7;
+  width: 220px;
+  height: 620px;
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-left: 12px;
+  font-size: 16px;
+  text-align: center;
+  li{
+    height:48px;
+    line-height: 48px;
+    background: #fff;
+    border-bottom:1px solid #ccc;
+    a{
+      width: 98%;
+      display: inline-block;
+    }
+    a:hover{
+      border: @solid #9fb6f9;
+    }
+    a.active{
+      background: #ff8000;
+      color: #fff;
+    }
+  }
+  h3{
+    height: 52px;
+    line-height: 52px;
+    border-bottom: @solid #ccc;
+    a{
+      background: url("../images/arrow_up.png") no-repeat;
+      background-position: left center;
+      background-size:  22px;
+      padding-left: 32px;
+    }
+    a.down{
+      background: url("../images/arrow_down.png") no-repeat;
+      background-position: left center;
+      background-size:  22px;
+      padding-left: 32px;
+    }
+    img{
+      width: 22px;
+      vertical-align: middle;
+    }
+  }
+}
+
+//主体内容main
+.main_content{
+  margin-top: 46px;
+  margin-left: 35px;
+  font-size: 15px;
+  line-height: 32px;
+  p{
+    margin-right: 14px;
+    input{
+      margin-left: 5px;
+      height: 22px;
+      text-indent: 3px;
+      border-radius: 4px;
+      border: 1px solid #bfcbd9;
+      width: 215px;
+      height: 31px;
+    }
+  }
+  #search_btn{
+    width: 88px;
+    height: 32px;
+    background: #ff8000;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+.data_form_sec{
+  margin-top: 36px;
+  table{
+    border-left: @solid gray;
+    border-top: @solid gray;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    td{
+      border-right: @solid gray;
+      border-bottom: @solid gray;
+      padding: 6px 0;
+      width: 11.1%;
+      .btn{
+        width: 78px;
+        height:30px;
+        border-radius: 4px;
+      }
+      .disabled{
+        background: #ccc;
+        cursor: text;
+      }
+    }
+  }
+}
+
+//打赏功能设置
+.edit_sec{
+  width:80%;
+  .edit{
+    margin-top: 20px;
+    margin-bottom: 52px;
+    border: @solid gray;
+    position: relative;
+    h3{
+      background: rgba(215, 215, 215, 1);
+      padding:12px 25px;
+    }
+    .content{
+      padding: 60px 80px;
+    }
+    .remark_sec{
+      position: absolute;
+      left: 100%;
+      width: 26%;
+      top: 12px;
+      margin-left: 20px;
+    }
+  }
+  //图片预览
+  .add_photos .preview_img_sec{
+    text-align: center;
+    padding: 50px 0;
+    border: 1px solid #ccc;
+    #preview_img{
+      max-width: 540px;
+      width: auto;
+    }
+  }
+}
+//提现记录页面
+.withdraw_record_content{
+  .search_sec{
+    font-size: 14px;
+  }
+  .search_sec p{
+    margin-bottom: 18px;
+  }
+  .phone_num{
+    width: 190px;
+  }
+  .el-date-editor--daterange.el-input {
+    width: 190px;
+    font-size: 13px;
+  }
+}
+
+//设置 概况
+.profile_header{
+  background: #e7e7e7;
+  border-radius: 8px;
+  border: @solid gray;
+  padding: 18px 0;
+  h3{
+    border-bottom: @solid gray;
+    padding-left: 20px;
+  }
+  .profile_table{
+    width: 100%;
+    padding-left: 20px;
+    text-align: center;
+  }
+}
+.profile_content{
+  .search_time_range{
+    padding: 12px;
+  }
+  .data_detail{
+    h3{
+      background: rgba(215, 215, 215, 1);
+      height: 56px;
+      line-height: 56px;
+      padding: 0 20px;
+    }
+    p{
+      text-align: right;
+    }
+  }
+}
+.detail_table{
+  width: 100%;
+  border-left: @solid gray;
+  border-top: @solid gray;
+  margin-top: 20px;
+  td{
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    height: 32px;
+    text-align: center;
+    padding: 0 3px;
+    font-size: 13px;
+  }
+}
+//echarts图表
+.echarts_wrapper{
+  background: #f1f1f1;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid gray;
+  h3{
+    border-bottom: 1px solid gray;
+    padding-bottom: 10px;
+  }
+  .zr-element{
+  }
+  .search_limits a{
+    display: inline-block;
+    margin-right: 5px;
+    padding: 0 3px;
+  }
+  .select_tags{
+    margin: 10px;
+    a{
+      width: 88px;
+      height: 36px;
+      line-height: 36px;
+      display: inline-block;
+      margin: 0 2px;
+      background: #ccc;
+      text-align: center;
+      border-radius: 8px;
+      border: 1px solid gray;
+    }
+    a.active{
+      background: #868484;
+      color: #ffffff;
+    }
+  }
+  .search_limits a.active{
+    border-bottom: 4px solid deepskyblue;
+  }
+  .data_detail{
+    h3{
+      border-bottom: none;
+      background: #ccc;
+      padding: 6px;
+    }
+    .export_btn{
+      color: red;
+    }
+  }
+}
+.app_user_detail .detail_table{
+  width: 80%;
+  background: #fff;
+}
+.alert_withdraw_sec{
+  .alert_wrap{
+    height: 190px;
+  }
+  .detail p{
+    //height: 42px;
+    line-height: 30px;
+    width: 200px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  #order_num{
+    width: 120px;
+  }
+}
+
+//登录页面样式
+.header {
+  height: 70px;
+  line-height: 70px;
+  background: #3f4044;
+  min-width: 1200px;
+}
+.header_containt {
+  width: 1200px;
+  height: 60px;
+  line-height: 80px;
+  margin: 0 auto;
+}
+.header_containt>a {
+  padding-left: 60px;
+}
+.register_containt {
+  width: 1160px;
+  height: 520px;
+  padding: 20px;
+  position: fixed;
+  left: 50%;
+  margin-left: -580px;
+  top: 50%;
+  margin-top: -252px;
+}
+.login_banner_img {
+  width: 700px;
+}
+.register_side_right {
+  padding-left: 52px;
+  display: inline-block;
+  width: 388px;
+  text-align: center;
+  margin-top: 100px;
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #ccc;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #ccc;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #ccc;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #ccc;
+  }
+  .row{
+    margin: 18px;
+  }
+  input {
+    height: 40px;
+    width: 300px;
+    border: 1px solid #cecece;
+    outline: 0;
+    font-size: 15px;
+    color: #c1c1c1;
+    padding-left: 10px;
+    line-height: 40px;
+  }
+  .confirmBtn {
+    letter-spacing: 2px;
+    color: #fff;
+    background: #ff8000;
+    border-radius: 2px;
+    width: 312px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    cursor: pointer;
+  }
+  .login_a {
+    color: #949494;
+  }
+}
+.footer.fixed {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  min-width: 1200px;
+  .copyright {
+    color: #686868;
+    height: 60px;
+    line-height: 60px;
+    background: #efefef;
+    font-size: 16px;
+  }
+}
+
+
+
+
+//弹窗样式
+.alert_sec{
+  width: 100%;
+  display: none;
+  background: rgba(0, 0, 0, 0.2);
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  .alert_wrap{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 40%;
+    padding: 40px;
+    border: 1px solid gray;
+    height: 168px;
+    background: #fff;
+    font-size: 15px;
+    text-align: center;
+  }
+  .detail p{
+    //height: 40px;
+    input{
+      width: 50px;
+      text-indent: 3px;
+    }
+  }
+  .alert_body a{
+    display: inline-block;
+    width: 60px;
+    border: 1px solid #ccc;
+    margin: 6px 18px;
+    border-radius: 4px;
+  }
+}
+
+
+//时间选择控件样式
+.el-date-editor--datetimerange.el-input {
+  width: 220px;
+}
+
+@media only screen and (max-width: 1300px){
+  #container{
+    width: 1200px;
+  }
+  .main_content{
+    width: 900px;
+  }
+}
+@media only screen and (max-width: 1460px) and (min-width: 1300px){
+  #container{
+    width: 1300px;
+  }
+  .main_content{
+    width: 1000px;
+  }
+}
+@media only screen and (min-width: 1460px){
+  #container{
+    width: 1410px;
+  }
+  .main_content{
+    width: 1120px;
+  }
+}
+
+
+

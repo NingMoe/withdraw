@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration status="off" monitorInterval="1800">  
+    <properties>  
+        <property name="LOG_HOME">logs</property>  
+        <property name="SERVICE_NAME">smarthome-sharedwifi-withdraw</property>
+    </properties>  
+    <appenders>
+		<!-- 定义控制台输出 -->
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout
+				pattern="%d{yyyy-MM-ddHH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } [${SERVICE_NAME},%X{X-B3-SpanId},%X{X-B3-TraceId},%X{X-Span-Export}] %-40.40logger{39} : %m%n" />
+		</Console>
+		<!-- 程序员调试日志，每100M一个文件 -->
+		<RollingRandomAccessFile name="DevLog"
+			fileName="${LOG_HOME}/${SERVICE_NAME}.log" filePattern="${LOG_HOME}/${SERVICE_NAME}.%d{yyyy-MM-dd-HH-mm-ss}.log">
+			<PatternLayout
+				pattern="%d{yyyy-MM-ddHH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } [${SERVICE_NAME},%X{X-B3-SpanId},%X{X-B3-TraceId},%X{X-Span-Export}] %-40.40logger{39} : %m%n" />
+			<SizeBasedTriggeringPolicy size="100MB" />
+		</RollingRandomAccessFile>
+		<Async name="async-devlog">
+			<AppenderRef ref="DevLog" />
+		</Async>
+	</appenders>
+	<loggers>
+		<!-- Root Logger -->
+		<root level="INFO">
+			<AppenderRef ref="async-devlog" />
+		</root>
+	</loggers>
+</configuration>

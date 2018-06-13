@@ -1,0 +1,14 @@
+.DS_Store
+
+target
+
+# IDEA artifacts and output dirs
+*.iml
+.idea
+.gradle
+build
+logs
+org.eclipse.core.runtime.prefs
+.classpath
+.project
+.settings

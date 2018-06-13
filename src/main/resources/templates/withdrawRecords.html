@@ -1,0 +1,452 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8;rewardManagerSystem_1.0.0_build1_dev"/>
+<title>打赏网络后台系统</title>
+<style type="text/css">
+
+</style>
+<link href="./static/css/reset.css" type="text/css" rel="Stylesheet" />
+<link href="./static/css/index.css" type="text/css" rel="Stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+</head>
+<body>
+
+    <div id="header">
+        <div class="header_inner ofh">
+            <h3 class="fl">打赏网络后台系统</h3>
+            <div class="login_sec fr">
+                <span class="user_name">王兴</span>
+                <a href="####" id="logout">退出</a>
+            </div>
+        </div>
+    </div>
+    <div id="container" class="ofh">
+        <!--左边导航区-->
+        <div class="nav_aside fl">
+            <!--<div class="nav_data_analysis">-->
+                <!--<h3><a href="####"><span>统计分析</span></a></h3>-->
+                <!--<ul>-->
+                    <!--<li><a href="####">概况</a></li>-->
+                    <!--<li><a href="####">APP用户</a></li>-->
+                    <!--<li><a href="####">打赏用户</a></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+            <div class="nav_manage" style="padding-top: 20px">
+                <!--<h3><a href="####"><span>管理</span></a></h3>-->
+                <ul>
+                    <!--<li><a href="####">设置</a></li>-->
+                    <!--<li><a href="####">用户列表</a></li>-->
+                    <!--<li><a href="####">收益列表</a></li>-->
+                    <li><a href="####" class="">提现列表</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="main_content fl withdraw_record_content">
+            <div class="search_sec ofh">
+                <p class="fl">手机号码<input type="text" class="phone_num"></p>
+                <div class="search_time_range fl" style="margin-right: 16px;">
+                    <template>
+                        <div class="block fl apply_time" style="margin-right: 14px;">
+                            <span class="demonstration">申请时间</span>
+                            <el-date-picker
+                                    v-model="value4"
+                                    type="daterange"
+                                    placeholder="选择日期范围">
+                            </el-date-picker>
+                        </div>
+                    </template>
+                    <template>
+                        <div class="block fl operate_time">
+                            <span class="demonstration">操作时间</span>
+                            <el-date-picker
+                                    v-model="value6"
+                                    type="daterange"
+                                    placeholder="选择日期范围">
+                            </el-date-picker>
+                        </div>
+                    </template>
+                </div>
+                <a href="####" class="fl"  id="search_btn">搜索</a>
+            </div>
+            <div class="data_form_sec">
+                <!--用vue渲染数据-->
+                <table style="margin-top: 30px">
+                    <tr>
+                        <td>序号</td>
+                        <td>手机号</td>
+                        <td>昵称</td>
+                        <td>提现金额</td>
+                        <td>支付宝账户</td>
+                        <td>申请时间</td>
+                        <td>操作时间</td>
+                        <td>订单编号</td>
+                        <td>操作</td>
+                    </tr>
+                    <tr v-for="(item,index) in dataArr">
+                        <td class="num_td">{{ parseInt(index)+1 }}<input type="hidden" :value="item.num"></td>
+                        <td class="phone_num_td" v-html="item.mobile_num"></td>
+                        <td class="user_name_td" v-html="item.user_name"></td>
+                        <td class="money_num_td" v-html="item.money_num"></td>
+                        <td class="alipay_account_td" v-html="item.alipay_account"></td>
+                        <td class="apply_time_td">{{item.apply_time|formatDate}}</td>
+                        <td class="success_time_td">{{item.success_time|formatDate}}</td>
+                        <td class="order_num_td" v-html="item.order_num"></td>
+                        <td class="withdraw_state_td">
+                            <a href="####" class="btn"  :class="{'withdraw_btn':!item.withdraw_state,'disabled':(item.withdraw_state===1?true:false)}">提现</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!--分页组件-->
+            <div class="pager_sec">
+                <div class="pager">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--点击提现弹窗-->
+    <div class="alert_withdraw_sec alert_sec" style="">
+        <div class="alert_wrap">
+            <div class="alert_header">
+            </div>
+            <div class="alert_body">
+                <div class="detail">
+                    <p class="phone_num">手机号：<span>18566259486</span></p>
+                    <p class="alipay_account">支付宝账户：<span>18566259486</span></p>
+                    <p class="money_num">提现金额：<span>8.88元</span></p>
+                    <p class="order_num">订单编号：<input type="text"  id="order_num" ></p>
+                </div>
+                <a href="####" class="btn_cancel">取消</a><a href="####" class="btn_sure">确定</a>
+            </div>
+        </div>
+    </div>
+    <script src="./static/js/jquery.min.js"></script>
+    <script src="./static/js/dateRange.js"></script>
+    <script src="./static/js/pager.js"  charset="gb2312"></script>
+    <!-- 引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script type="text/javascript">
+
+    $(function(){
+        var phone_num="";
+        var apply_start_time="";
+        var apply_end_time="";
+        var oper_start_time="";
+        var oper_end_time="";
+        var querytimestamp;
+        var dataMock;
+        function formatDate(time,formatTime) {
+            var d=new Date(time*1000),
+                day=d.getDate(),
+                month=d.getMonth() + 1,
+                year=d.getFullYear(),
+                hour = d.getHours(),
+                minute = d.getMinutes()< 10 ? '0'+d.getMinutes() : d.getMinutes(),
+                second = d.getSeconds()< 10 ? '0'+d.getSeconds() : d.getSeconds();
+            formatTime = year + "/" + month + "/" + day + " "+ hour +":"+ minute +":"+ second;
+            return formatTime;
+        }
+
+        // 点击导航链接，添加高亮样式
+        $(".nav_data_analysis li a").click(function(){
+            $(".nav_data_analysis li a").removeClass("active");
+            $(this).addClass("active");
+        })
+        $(".nav_manage li a").click(function(){
+            $(".nav_manage li a").removeClass("active");
+            $(this).addClass("active");
+        })
+        //点击箭头，收起菜单导航
+        $(".nav_data_analysis h3 a").click(function () {
+            $(this).toggleClass("down");
+            $(".nav_data_analysis ul").toggle()
+        })
+        $(".nav_manage h3 a").click(function () {
+            $(this).toggleClass("down");
+            $(".nav_manage ul").toggle()
+        })
+
+
+        //页面刷新加载时，请求后台数据
+        let param = {
+            "applytime_begin": "" ,
+            "applytime_end": "",
+            "cur_page": 1,
+            "mobile_num": "",
+            "optime_begin": "",
+            "optime_end": "",
+            "page_size": 20,
+            "querytimestamp": "string"
+        };
+        $.ajax({
+            url: "http://szdc.phicomm.com/ssp/withdraw/withdraw/queryList",
+            headers:{"content-type": "application/json"},
+            async: true,
+            type: "post",
+            dataType: "json",
+            data:JSON.stringify(param) ,
+            success: function (data) {
+                var dataMock=data.result.content;
+                var totalElements;//数据记录总数
+                totalElements=data.result.totalElements;
+                data_form.$data.dataArr=dataMock;
+                //更新分页方式
+                //分页组件
+                var pageIndex;
+                var page_size;
+                $(".pager_class").pager({
+                    pageIndex: 0,
+                    pageSize: 20,   //总的分页按钮n=itemCount/pageSize
+                    itemCount: totalElements,
+                    maxButtonCount: 5,
+                    callback:function(p) {
+
+                    }
+                });
+                var pager = $(".pager").pager();
+            }
+        });
+
+        //使用VUE渲染数据;
+        var data_form = new Vue({
+            el: '.data_form_sec',
+            data:{
+                dataArr:dataMock
+            },
+            filters: {
+                formatStatus(status){
+                    if(status == 1){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                },
+                formatDate(time){
+                    var formatTime;
+                    var d;
+                    if(time===""||time=="0"||""){
+                        formatTime="——";
+                    }else{
+                        d=new Date(time*1000),//后台返回的时间精确到秒，需要转换成毫秒
+                            day=d.getDate(),
+                            month=d.getMonth() + 1,
+                            year=d.getFullYear(),
+                            hour = d.getHours(),
+                            minute = d.getMinutes()< 10 ? '0'+d.getMinutes() : d.getMinutes(),
+                            second = d.getSeconds()< 10 ? '0'+d.getSeconds() : d.getSeconds();
+                        formatTime = year + "/" + month + "/" + day + " "+ hour +":"+ minute +":"+ second;
+                    }
+                    return formatTime;
+                }
+            }
+        })
+
+
+        //点击提现，弹窗
+        var alert_withdraw = $(".alert_withdraw_sec");
+        var parentTr;
+        $("body").on("click",".withdraw_btn",function (e) {
+            parentTr = $(this).parents("tr");
+            var phone_num = parentTr.find(".phone_num_td").html(),
+            alipay_account = parentTr.find(".alipay_account_td").html(),
+            money_num = parentTr.find(".money_num_td").html();
+
+            alert_withdraw.find(".phone_num span").html( phone_num );
+            alert_withdraw.find(".alipay_account span").html( alipay_account );
+            alert_withdraw.find(".money_num span").html( money_num );
+            alert_withdraw.show();
+            return parentTr;
+        })
+
+        //提现弹窗消失
+        alert_withdraw.find(".btn_cancel").click(function () {
+            $(".alert_withdraw_sec #order_num").val("");
+            alert_withdraw.hide();
+        })
+
+        //输入订单，确认时，查询后台是否成功
+        alert_withdraw.find(".btn_sure").click(function () {
+            var order_num = $(".alert_withdraw_sec #order_num").val();
+            var num_val = parentTr.find(".num_td input").val();
+            var d=new Date(),
+            day=d.getDate(),
+            month=d.getMonth() + 1,
+            year=d.getFullYear(),
+            hour = d.getHours(),
+            minute = d.getMinutes()< 10 ? '0'+d.getMinutes() : d.getMinutes(),
+            second = d.getSeconds()< 10 ? '0'+d.getSeconds() : d.getSeconds();
+            order_success_time = year + "/" + month + "/" + day + " "+ hour +":"+ minute +":"+ second;
+            if( order_num ){
+                console.log("num1:"+num_val);
+                console.log("order_num1:"+order_num);
+                let param = {
+                    "num": num_val,
+                    "order_num": order_num
+                };
+                $.ajax({
+                    url: "http://172.31.34.61:3000/withdraw/handleWithdraw",
+                    headers:{"content-type": "application/json"},
+                    async: true,
+                    type: "post",
+                    dataType: "json",
+                    data:JSON.stringify(param) ,
+                    success: function (data) {
+                        var result=data.result;
+                        parentTr.find(".withdraw_btn").addClass("disabled").removeClass("withdraw_btn");
+                        parentTr.find(".withdraw_btn").removeClass("withdraw_btn");
+                        parentTr.find(".order_num_td").html( order_num );
+                        parentTr.find(".success_time_td").html( formatDate(result.success_time) );
+                        //清空val
+                        $(".alert_withdraw_sec #order_num").val("");
+                        alert_withdraw.hide();
+                    }
+                });
+
+            }else{
+                alert("请输入正确订单号")
+            }
+        })
+
+
+        //点击搜索，筛选搜索数据
+        var querytimestamp=1;
+        $("#search_btn").click(function () {
+            var oper_start_val;
+            var apply_start_val;
+            var apply_start_arr;
+            var oper_start_arr;
+            phone_num = $(".search_sec .phone_num").val().trim();
+            apply_start_val = $(".search_sec .apply_time .el-input__inner").val();
+            oper_start_val = $(".search_sec .operate_time .el-input__inner").val();
+            if( oper_start_val==="" ){
+                oper_start_arr = ["",""];
+            }else{
+                oper_start_arr = oper_start_val.split(" - ");
+            }
+            if( apply_start_val==="" ){
+                apply_start_arr = ["",""];
+            }else{
+                apply_start_arr = apply_start_val.split(" - ");
+            }
+            apply_start_time = apply_start_arr[0];
+            apply_end_time = apply_start_arr[1];
+            oper_start_time = oper_start_arr[0];
+            oper_end_time = oper_start_arr[1];
+            console.log( "1:"+apply_start_arr );
+            console.log( "1:"+phone_num );
+            console.log( "2:"+apply_start_time );
+            console.log( "3:"+apply_end_time );
+            console.log( "4:"+oper_start_time );
+            console.log( "5:"+oper_end_time );
+            let param = {
+                "applytime_begin": apply_start_time ,
+                "applytime_end": apply_end_time,
+                "cur_page": 1,
+                "mobile_num": phone_num,
+                "optime_begin": oper_start_time,
+                "optime_end": oper_end_time,
+                "page_size": 20,
+                "querytimestamp": "string"
+            };
+            $.ajax({
+                url: "http://xiangrong.phicomm.com:3000/withdraw/queryList",
+                headers:{"content-type": "application/json"},
+                async: true,
+                type: "post",
+                dataType: "json",
+                data:JSON.stringify(param) ,
+                success: function (data) {
+                    var dataMock=data.result.content;
+                    var totalElements;//数据记录总数
+                    totalElements=data.result.totalElements;
+                    console.log(dataMock);
+                    data_form.$data.dataArr=dataMock;
+                    //更新分页方式
+                    //分页组件
+                    var pageIndex;
+                    var page_size;
+                    $(".pager_class").pager({
+                        pageIndex: 0,
+                        pageSize: 20,   //总的分页按钮n=itemCount/pageSize
+                        itemCount: totalElements,
+                        maxButtonCount: 5,
+                        callback:function(p) {
+                            console.log(p); // print current page num
+                        }
+                    });
+                    var pager = $(".pager").pager();
+                }
+            });
+        });
+
+
+        $("#container .pager").on("click","a",function (e) {
+            var pageIndex=parseInt( $(this).attr("page") )+1;//获取当前页码值
+            let param = {
+                "applytime_begin": apply_start_time,
+                "applytime_end": apply_end_time,
+                "cur_page": pageIndex,
+                "mobile_num": phone_num,
+                "optime_begin": oper_start_time,
+                "optime_end": oper_end_time,
+                "page_size": 20,
+                "querytimestamp": querytimestamp
+            };
+            $.ajax({
+                url: "http://xiangrong.phicomm.com:3000/withdraw/queryList",
+                headers:{"content-type": "application/json"},
+                async: true,
+                type: "post",
+                dataType: "json",
+                data:JSON.stringify(param) ,
+                success: function (data) {
+                    var dataMock=data.result.content;
+                    console.log(dataMock);
+                    data_form.$data.dataArr=dataMock;
+                }
+            });
+        })
+
+
+    })
+
+    new Vue({
+        el: '.search_time_range',
+        data: function data() {
+            return {
+                pickerOptions2: {},
+                value4: '',
+                value5: '',
+                value6: '',
+                value7: ''
+            };
+        }
+    })
+
+
+
+    var dataMock = {
+        "0":{
+            "num":23,"mobile_num":18566365869,"user_name":"user1","money_num":"8.26","alipay_account":18566259486,"apply_time":"1498114696","success_time":"1498114696","order_num":"——","withdraw_state":"true"
+        }
+    }
+
+
+
+
+
+
+
+
+</script> 
+</body>
+</html>

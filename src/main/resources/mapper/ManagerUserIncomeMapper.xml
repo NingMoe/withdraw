@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.phicomm.smarthome.ssp.server.dao.ManagerUserIncomeMapper">
+    
+    <resultMap id="UserInfoListResultMap" type="com.phicomm.smarthome.ssp.server.model.response.ResponseUserInfoModel">
+        <result column="phi_nickname" property="phiNickname" />
+        <result column="iphone" property="iphone" />
+        <result column="router_mac" property="userMac" />
+        <result column="active_time" property="useStartTime" />
+    </resultMap>
+    <select id="getUserInfoList" parameterType="java.util.Map" resultMap="UserInfoListResultMap">
+        SELECT uid,iphone,phi_nickname,router_mac,active_time FROM `sw_user_router` WHERE STATUS>=0
+        <if test="iphone !=null and iphone != ''"> and iphone = #{iphone} </if>
+        <if test="startTimeTs !=0"> and active_time >= #{startTimeTs} </if>
+        <if test="endTimeTs !=0"> and #{endTimeTs} >= active_time </if>
+        LIMIT #{startIndex},#{offset}
+    </select>
+    
+    <select id="countUserInfoList" parameterType="java.util.Map" resultType="Integer">
+        SELECT count(*) FROM `sw_user_router` WHERE STATUS>=0
+        <if test="iphone !=null and iphone != ''"> and iphone = #{iphone} </if>
+        <if test="startTimeTs !=0"> and active_time >= #{startTimeTs} </if>
+        <if test="endTimeTs !=0"> and #{endTimeTs} >= active_time </if>
+    </select>
+    
+    <select id="getUserInfoListPage" parameterType="java.util.Map" resultMap="UserInfoListResultMap">
+        SELECT uid,iphone,phi_nickname FROM `sw_user` WHERE STATUS>=0 
+        <if test="iphone !=null and iphone != ''"> and iphone = #{iphone} </if>
+        limit #{start}, #{pageSize}
+    </select>
+    
+    <select id="getUserInfoListCount" parameterType="java.util.Map" resultType="Integer">
+        SELECT count(*) FROM `sw_user` WHERE STATUS>=0 
+        <if test="iphone !=null and iphone != ''"> and iphone = #{iphone} </if>
+    </select>
+    
+    <resultMap id="SwUserIncomeListResultMap" type="com.phicomm.smarthome.ssp.server.model.SwUserIncomeModel">
+        <result column="order_id" property="orderId" />
+        <result column="today_income" property="todayIncome" />
+        <result column="router_mac" property="routerMac" />
+    </resultMap>
+    <select id="getUserIncomeList" parameterType="java.util.Map" resultMap="SwUserIncomeListResultMap">
+        SELECT i.order_id,i.uid,i.today_income,i.router_mac,u.iphone FROM `sw_user_income` i 
+        LEFT JOIN `sw_user` u ON i.uid=u.uid 
+        WHERE u.status>=0 
+        <if test="startTimeTs !=0 and endTimeTs != 0">
+            <![CDATA[ AND i.update_time>=#{startTimeTs} AND i.update_time<=#{endTimeTs} ]]> 
+        </if>
+        <if test="iphone !=null and iphone != ''"> and u.iphone = #{iphone} </if>
+        ORDER BY i.update_time DESC 
+        limit #{start}, #{pageSize} 
+    </select>
+    <select id="getUserIncomeListCount" parameterType="java.util.Map" resultType="Integer">
+        SELECT count(*) FROM `sw_user_income` i 
+        LEFT JOIN `sw_user` u ON i.uid=u.uid 
+        WHERE u.status>=0 
+        <if test="startTimeTs !=0 and endTimeTs != 0">
+            <![CDATA[ AND i.update_time>=#{startTimeTs} AND i.update_time<=#{endTimeTs} ]]> 
+        </if>
+        <if test="iphone !=null and iphone != ''"> and iphone = #{iphone} </if>
+    </select>
+    
+    <select id="getAllRouterMacByTs" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT MIN(create_time) AS create_time,router_mac 
+        FROM `sw_router` WHERE STATUS=0 
+        <if test="startTimeTs !=0 and endTimeTs != 0"> 
+            <![CDATA[ AND create_time>=#{startTimeTs} AND create_time<=#{endTimeTs} ]]> 
+        </if>
+        GROUP BY router_mac 
+        ORDER BY create_time ASC
+        
+    </select>
+    
+</mapper>
